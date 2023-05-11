@@ -1,0 +1,11 @@
+#!/bin/bash
+let "width_coef = $1"
+ let "height_coef = $2"
+ let "screen_height = $(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)"
+ let "screen_width = $(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)"
+ let "width = $width_coef * $screen_width / 100"
+ let "height = $height_coef * $screen_height / 100"
+ let "xoffset = $screen_width/2 - $width/2"
+ let "yoffset = $screen_height/2 - $height/2"
+expression="$width x$height+$xoffset+$yoffset"
+echo $(echo $expression | sed "s/ //" )
